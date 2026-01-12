@@ -12,6 +12,11 @@ module.exports = (sequelize, DataTypes) => {
       otherKey: 'userId',    
       as: 'users' 
        });
+      this.belongsToMany(models.Permission, { 
+       through: 'GroupPermissions', 
+       foreignKey: 'groupId', 
+       as: 'permissions' 
+       });
     }
   }
   Group.init({

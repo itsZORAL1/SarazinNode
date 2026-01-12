@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
      otherKey: 'groupId',   
      as: 'groups' 
        });
+    this.hasMany(models.Session, { foreignKey: 'userId', as: 'sessions' });   
     }
   }
   User.init({

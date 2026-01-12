@@ -17,4 +17,17 @@ async function createGroup(req, res) {
     } catch (error) { res.status(400).send(error.message); }
 }
 
-module.exports = { listGroups, createGroup };
+async function deleteGroup(req, res) {
+    try {
+        const deleted = await Group.destroy({ where: { id: req.params.id } });
+        if (deleted) {
+            res.status(204).send();
+        } else {
+            res.status(404).send("Group not found");
+        }
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+}
+
+module.exports = { listGroups, createGroup ,deleteGroup};

@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const mainRouter = require('./routes/routes'); // Points to routes/routes.js

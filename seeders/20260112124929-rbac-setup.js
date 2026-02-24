@@ -2,31 +2,34 @@
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    // required permissions
+    // Updated permissions to match Chronos Archive theme
     const permissionsList = [
       { scope: 'user:read' }, { scope: 'user:write' }, { scope: 'user:delete' },
-      { scope: 'device:read' }, { scope: 'device:write' }, { scope: 'device:delete' },
+      { scope: 'artifact:read' }, { scope: 'artifact:write' }, { scope: 'artifact:delete' }, // Replaced 'device'
+      { scope: 'anomaly:read' }, { scope: 'anomaly:write' }, { scope: 'anomaly:delete' },    // New: Time Rips
+      { scope: 'mission:read' }, { scope: 'mission:write' },                                // New: Operations
       { scope: 'self:read' }, { scope: 'me:write' },
       { scope: 'session:read' }, { scope: 'session:write' }, { scope: 'session:delete' },
-      { scope: 'group:read' }, { scope: 'group:write' }, { scope: 'group:delete' },
-      { scope: 'group:request' }
+      { scope: 'group:read' }, { scope: 'group:write' }, { scope: 'group:delete' }
     ];
 
     await queryInterface.bulkInsert('Permissions', permissionsList.map(p => ({
       ...p, createdAt: new Date(), updatedAt: new Date()
     })));
 
-    // Groups
+    // Groups renamed to Agency Departments
     const groupsList = [
-      { name: 'Admin' }, { name: 'UserStandard' }, { name: 'UserManager' },
-      { name: 'Guest' }, { name: 'DeviceManager' }
+      { name: 'O5-Council' },      // Was Admin
+      { name: 'Archivist' },       // Was UserManager
+      { name: 'FieldAgent' },      // Was DeviceManager
+      { name: 'Researcher' },      // Was UserStandard
+      { name: 'TemporalGuest' }    // Was Guest
     ];
 
     await queryInterface.bulkInsert('Groups', groupsList.map(g => ({
       ...g, createdAt: new Date(), updatedAt: new Date()
     })));
 
-    // Getting IDs to link them in GroupPermissions
     const [permissions] = await queryInterface.sequelize.query('SELECT id, scope FROM "Permissions";');
     const [groups] = await queryInterface.sequelize.query('SELECT id, name FROM "Groups";');
 
@@ -35,28 +38,28 @@ module.exports = {
 
     const groupPermissions = [];
 
-    // Mapping Logic
-    const adminId = findG('Admin');
+    // 1. O5-Council (Full Access)
+    const adminId = findG('O5-Council');
     permissions.forEach(p => groupPermissions.push({ groupId: adminId, permissionId: p.id }));
 
-    // UserManager Mapping
-    const userMgrId = findG('UserManager');
-    ['user:read', 'user:write', 'user:delete', 'group:read'].forEach(s => 
-      groupPermissions.push({ groupId: userMgrId, permissionId: findP(s) }));
+    // 2. Archivist (Personnel & Mission Management)
+    const archivistId = findG('Archivist');
+    ['user:read', 'user:write', 'group:read', 'mission:read', 'artifact:read'].forEach(s => 
+      groupPermissions.push({ groupId: archivistId, permissionId: findP(s) }));
 
-    // DeviceManager Mapping
-    const devMgrId = findG('DeviceManager');
-    ['device:read', 'device:write', 'device:delete'].forEach(s => 
-      groupPermissions.push({ groupId: devMgrId, permissionId: findP(s) }));
+    // 3. FieldAgent (Recovery Operations)
+    const agentId = findG('FieldAgent');
+    ['artifact:read', 'artifact:write', 'anomaly:read', 'mission:read', 'mission:write'].forEach(s => 
+      groupPermissions.push({ groupId: agentId, permissionId: findP(s) }));
 
-    // UserStandard Mapping
-    const stdId = findG('UserStandard');
-    ['self:read', 'me:write', 'device:read', 'session:read'].forEach(s => 
-      groupPermissions.push({ groupId: stdId, permissionId: findP(s) }));
+    // 4. Researcher (Data Analysis)
+    const researcherId = findG('Researcher');
+    ['self:read', 'me:write', 'artifact:read', 'anomaly:read', 'session:read'].forEach(s => 
+      groupPermissions.push({ groupId: researcherId, permissionId: findP(s) }));
 
-    // Guest Mapping
-    const guestId = findG('Guest');
-    ['self:read', 'device:read'].forEach(s => 
+    // 5. TemporalGuest (Restricted View)
+    const guestId = findG('TemporalGuest');
+    ['self:read', 'artifact:read'].forEach(s => 
       groupPermissions.push({ groupId: guestId, permissionId: findP(s) }));
 
     await queryInterface.bulkInsert('GroupPermissions', groupPermissions.map(gp => ({

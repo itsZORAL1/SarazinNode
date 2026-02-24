@@ -4,7 +4,8 @@
   "description": "npm init -y",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -19,14 +20,18 @@
   },
   "homepage": "https://github.com/itsZORAL1/SarazinNode#readme",
   "dependencies": {
+    "bcryptjs": "^3.0.3",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.3",
-    "pg": "^8.16.3",
+    "pg": "^8.18.0",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.37.7"
   },
   "devDependencies": {
     "sequelize-cli": "^6.6.5"
+  },
+  "directories": {
+    "test": "tests"
   }
 }

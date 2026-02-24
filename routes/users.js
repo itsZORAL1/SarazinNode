@@ -4,17 +4,18 @@ const userController = require('../controllers/user');
 const { CheckAuth } = require('../middlewares/auth');
 const { CheckPermission } = require('../middlewares/perm');
 
-
+// Self-service (Low clearance)
 router.get('/me', CheckAuth, userController.getMe); 
-router.get('/:id', CheckAuth, userController.getUserById);
-router.get('/', CheckAuth, CheckPermission('user:read'), userController.listUsers);     // GET /users
-router.get('/:id', CheckAuth, userController.getUserById);    // GET /users/:id
-router.post('/', CheckAuth, CheckPermission('group:write'), userController.createUser);     // POST /users
-router.put('/:id', CheckAuth, userController.updateUser);     // PUT /users/:id
-router.delete('/:id', CheckAuth, CheckPermission('user:delete'), userController.deleteUser);  // DELETE /users/:id
-router.post('/:userId/groups/:groupId', CheckAuth, userController.addUserToGroup); // Link a user (ID) to a group (ID)
+
+// Management routes (Requires specific scopes and higher clearance)
+router.get('/', CheckAuth, CheckPermission('user:read', 4), userController.listUsers);
+router.get('/:id', CheckAuth, CheckPermission('user:read', 4), userController.getUserById);
+
+router.post('/', CheckAuth, CheckPermission('user:write', 5), userController.createUser);
+router.put('/:id', CheckAuth, CheckPermission('user:write', 4), userController.updateUser);
+router.delete('/:id', CheckAuth, CheckPermission('user:delete', 5), userController.deleteUser);
+
+// Agency specific logic: Assigning agents to groups
+router.post('/:userId/groups/:groupId', CheckAuth, CheckPermission('group:write', 4), userController.addUserToGroup);
 
 module.exports = router;
-
-
-

@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
-const JWT_SECRET = process.env.JWT_SECRET; 
-
+const JWT_SECRET = process.env.JWT_SECRET || 'CHRONOS_SUPER_SECRET_2026'; 
 
 const generateAccessToken = (payload) => {
     return jwt.sign(
@@ -18,7 +17,4 @@ const verifyAccessToken = (token) => {
     }
 };
 
-module.exports = {
-    generateAccessToken,
-    verifyAccessToken
-};
+module.exports = { generateAccessToken, verifyAccessToken };

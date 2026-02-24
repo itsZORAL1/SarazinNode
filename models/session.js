@@ -9,14 +9,13 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
 
+// models/session.js
 Session.init({
-  token: {
-    type: DataTypes.TEXT, 
-    allowNull: false,
-    unique: true
-  },
+  token: { type: DataTypes.TEXT, allowNull: false },
   userId: DataTypes.INTEGER,
-  expiresAt: DataTypes.DATE
+  expiresAt: DataTypes.DATE,
+  ipAddress: DataTypes.STRING, // Pentest requirement: Track source
+  userAgent: DataTypes.STRING  // Pentest requirement: Detect hijacking
 }, {
   sequelize,
   modelName: 'Session',

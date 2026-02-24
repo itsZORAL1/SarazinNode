@@ -1,5 +1,4 @@
 'use strict';
-/** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Sessions', {
@@ -9,31 +8,22 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      token: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true
+      token: { 
+        type: Sequelize.TEXT, // Changed from STRING to TEXT for long JWTs
+        allowNull: false, 
+        unique: true 
       },
       userId: {
         type: Sequelize.INTEGER,
-        references: {
-          model: 'Users', // Name of the target table
-          key: 'id'
-        },
+        references: { model: 'Users', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
-      expiresAt: {
-        type: Sequelize.DATE
-      },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      }
+      ipAddress: { type: Sequelize.STRING }, // Track the source IP
+      userAgent: { type: Sequelize.STRING }, // Track the device/browser
+      expiresAt: { type: Sequelize.DATE },
+      createdAt: { allowNull: false, type: Sequelize.DATE },
+      updatedAt: { allowNull: false, type: Sequelize.DATE }
     });
   },
   async down(queryInterface, Sequelize) {

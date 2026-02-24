@@ -1,16 +1,26 @@
-const CheckPermission = (requiredScope) => {
+const CheckPermission = (requiredScope, minClearance = 1) => {
     return (req, res, next) => {
-       
+        // req.user is populated by your CheckAuth middleware from the JWT
         const userScopes = req.user.scopes || [];
+        const userClearance = req.user.clearance || 0;
 
-
-        if (userScopes.includes('admin') || userScopes.includes(requiredScope)) {
-            return next();
+        // 1. Vertical Security: Check Clearance Level
+        if (userClearance < minClearance) {
+            return res.status(403).json({ 
+                message: `CLASSIFIED: This resource requires Level ${minClearance} clearance. You are Level ${userClearance}.` 
+            });
         }
 
-        return res.status(403).json({ 
-            message: `Access Denied. Required scope: ${requiredScope}` 
-        });
+        // 2. Horizontal Security: Check Scopes
+        const hasScope = userScopes.includes(requiredScope) || userScopes.includes('*');
+
+        if (!hasScope) {
+            return res.status(403).json({ 
+                message: `ACCESS DENIED: Missing required scope [${requiredScope}].` 
+            });
+        }
+
+        next();
     };
 };
 

@@ -1,9 +1,16 @@
 require('dotenv').config();
 const express = require('express');
 const app = express();
-const mainRouter = require('./routes/routes'); // Points to routes/routes.js
+const mainRouter = require('./routes/routes');
 
 app.use(express.json());
-app.use('/', mainRouter); // All routes flow through here now
 
-app.listen(3000, () => console.log("Server running on port 3000"));
+// TEST ROUTE
+app.get('/test', (req, res) => {
+    res.json({ message: "Server is reachable!" });
+});
+
+app.use('/api', mainRouter);
+
+const PORT = 3000;
+app.listen(PORT, () => console.log(`SYSTEM LIVE ON PORT ${PORT}`));

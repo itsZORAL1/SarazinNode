@@ -35,12 +35,12 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      anomalyId: {
-        type: Sequelize.INTEGER,
-        references: { model: 'Anomalies', key: 'id' },
-        onUpdate: 'CASCADE',
-        onDelete: 'SET NULL'
-      }
+anomalyId: {
+  type: Sequelize.INTEGER,
+  references: { model: 'Anomalies', key: 'id' },
+  onUpdate: 'CASCADE',
+  onDelete: 'SET NULL'
+},
     });
   },
   async down(queryInterface, Sequelize) {

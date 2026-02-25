@@ -14,4 +14,6 @@ router.get('/:id', CheckAuth, CheckPermission('artifact:read', 3), artifactContr
 router.post('/', CheckAuth, CheckPermission('artifact:write', 4), artifactController.createArtifact);
 router.put('/:id', CheckAuth, CheckPermission('artifact:write', 4), artifactController.updateArtifact);
 
+router.delete('/:id', CheckAuth, CheckPermission('artifact:delete', 5), artifactController.deleteArtifact);
+
 module.exports = router;

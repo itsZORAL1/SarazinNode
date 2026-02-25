@@ -14,10 +14,11 @@ static associate(models) {
   this.belongsTo(models.User, { foreignKey: 'userId', as: 'author' });
 }
   }
-  AuditLog.init({
+AuditLog.init({
     userId: DataTypes.INTEGER,
     action: DataTypes.STRING,
     targetId: DataTypes.STRING,
+    details: DataTypes.TEXT, // <--- ADD THIS LINE
     ipAddress: DataTypes.STRING,
     userAgent: DataTypes.STRING
   }, {

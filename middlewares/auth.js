@@ -9,7 +9,6 @@ const CheckAuth = async (req, res, next) => {
         return res.status(401).json({ message: "No token provided" });
     }
 
-  
     const session = await Session.findOne({ where: { token } });
     if (!session) {
         return res.status(401).json({ message: "Session expired or logged out" });
@@ -21,8 +20,26 @@ const CheckAuth = async (req, res, next) => {
         return res.status(403).json({ message: "Invalid or expired token" });
     }
 
+    // decoded should contain the user's id and clearance level
     req.user = decoded; 
     next();
 };
 
-module.exports = { CheckAuth };
+// ADD THIS: The missing function that caused the crash
+const CheckClearance = (level) => {
+    return (req, res, next) => {
+        // We check req.user.clearance (populated by CheckAuth above)
+        if (!req.user || req.user.clearance < level) {
+            return res.status(403).json({ 
+                error: "INSUFFICIENT_CLEARANCE", 
+                message: `This operation requires Level ${level} clearance.` 
+            });
+        }
+        next();
+    };
+};
+
+module.exports = { 
+    CheckAuth, 
+    CheckClearance 
+};

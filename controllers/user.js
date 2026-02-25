@@ -5,8 +5,7 @@ async function listUsers(req, res) {
     try {
         const users = await User.findAll({
         
-            include: [
-                { model: Device, as: 'devices' }, // One-to-Many
+            include: [ // One-to-Many
                 { model: Group, as: 'groups' }    // Many-to-Many
             ]
         });
@@ -21,7 +20,6 @@ async function getUserById(req, res) {
     try {
         const user = await User.findByPk(req.params.id, {
             include: [
-                { model: Device, as: 'devices' },
                 { model: Group, as: 'groups' }
             ]
         });

@@ -2,7 +2,7 @@
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    // Updated permissions to match Chronos Archive theme
+
     const permissionsList = [
       { scope: 'user:read' }, { scope: 'user:write' }, { scope: 'user:delete' },
       { scope: 'artifact:read' }, { scope: 'artifact:write' }, { scope: 'artifact:delete' }, // Replaced 'device'

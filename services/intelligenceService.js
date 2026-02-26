@@ -4,7 +4,7 @@ class IntelligenceService {
     async getAgencyOverview() {
         const artifactsCount = await Artifact.count();
         const missionsCount = await Mission.count({ where: { status: 'IN_PROGRESS' } });
-        const anomaliesCount = await Anomaly.count({ where: { status: 'OPEN' } }); 
+        const anomaliesCount = await Anomaly.count({ where: { status: 'OPEN' } });
         
         let riskStatus = "STABLE";
         let securityNotice = null;
@@ -35,7 +35,8 @@ class IntelligenceService {
             },
             vaults: vaults.map(v => ({
                 name: v.locationName,
-                capacity: `${v.artifacts ? v.artifacts.length : 0}/${v.maxCapacity}`
+                capacity: `${v.artifacts ? v.artifacts.length : 0}/${v.maxCapacity}`,
+                loadPercent: v.maxCapacity > 0 ? Math.round(((v.artifacts ? v.artifacts.length : 0) / v.maxCapacity) * 100) : 0
             }))
         };
     }

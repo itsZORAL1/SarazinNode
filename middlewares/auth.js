@@ -25,14 +25,13 @@ const CheckAuth = async (req, res, next) => {
     next();
 };
 
-// ADD THIS: The missing function that caused the crash
 const CheckClearance = (level) => {
     return (req, res, next) => {
-        // We check req.user.clearance (populated by CheckAuth above)
-        if (!req.user || req.user.clearance < level) {
+        // Change req.user.clearance to req.user.clearanceLevel
+        if (!req.user || req.user.clearanceLevel < level) {
             return res.status(403).json({ 
                 error: "INSUFFICIENT_CLEARANCE", 
-                message: `This operation requires Level ${level} clearance.` 
+                message: `Level ${level} required. You are Level ${req.user.clearanceLevel || 0}.` 
             });
         }
         next();

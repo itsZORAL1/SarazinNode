@@ -22,7 +22,8 @@ static associate(models) {
     originEra: DataTypes.STRING,
     dangerLevel: DataTypes.INTEGER,
     status: DataTypes.STRING,
-    vaultId: DataTypes.INTEGER
+    vaultId: DataTypes.INTEGER,
+    anomalyId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Artifact',

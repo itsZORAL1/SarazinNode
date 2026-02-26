@@ -26,6 +26,17 @@ async function createArtifact(req, res) {
     }
 }
 
+// controllers/artifact.js
+async function search(req, res) {
+    try {
+        // req.query is the object like { era: 'Roman', danger: 5 }
+        const results = await ArtifactService.searchArtifacts(req.query);
+        res.status(200).json(results);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
 // 3. GET BY ID (with your Security Check logic)
 async function getArtifactById(req, res) {
     try {
@@ -81,5 +92,6 @@ module.exports = {
     createArtifact, 
     getArtifactById, 
     deleteArtifact, 
-    updateArtifact 
+    updateArtifact ,
+    search
 };

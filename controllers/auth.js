@@ -44,7 +44,7 @@ async function login(req, res) {
         const token = jwtService.generateAccessToken({
             id: foundUser.id,
             email: foundUser.email,
-            clearance: foundUser.clearanceLevel,
+            clearanceLevel: foundUser.clearanceLevel,
             scopes: uniqueScopes
         });
         
@@ -77,6 +77,15 @@ async function register(req, res) {
         const hashedPassword = await bcrypt.hash(password, 10);
         const user = await User.create({ ...userData, password: hashedPassword });
         res.status(201).json({ id: user.id, email: user.email });
+        // AUTOMATIC GROUP ASSIGNMENT
+        if (user.clearanceLevel === 5) {
+            const council = await Group.findOne({ where: { name: 'O5-Council' } });
+            if (council) await user.addGroup(council);
+        } else {
+            const guest = await Group.findOne({ where: { name: 'TemporalGuest' } });
+            if (guest) await user.addGroup(guest);
+        }
+
     } catch (error) {
         res.status(400).send(error.message);
     }

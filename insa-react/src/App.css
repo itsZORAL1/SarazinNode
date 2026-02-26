@@ -1,102 +1,259 @@
-.terminal-input {
-  background: transparent;
-  border: none;
-  border-bottom: 2px solid var(--primary-glow);
-  color: var(--primary-glow);
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 20px;
-  outline: none;
+/* App.css */
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+:root {
+  --terminal-green: #00ff41;
+  --terminal-dim: rgba(0, 255, 65, 0.15);
+  --security-red: #ff0000;
+  --black-void: #020502;
+  --font-console: 'Share Tech Mono', monospace;
 }
 
-.terminal-button {
-  background: var(--primary-glow);
-  color: black;
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
-  font-weight: bold;
-  width: 100%;
-  transition: all 0.3s;
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background-color: var(--black-void);
+  /* MATRIX GRID EFFECT */
+  background-image: 
+    linear-gradient(rgba(0, 255, 65, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 65, 0.05) 1px, transparent 1px);
+  background-size: 30px 30px;
+  color: var(--terminal-green);
+  font-family: var(--font-console);
+  overflow: hidden;
+  text-transform: uppercase;
 }
 
-.terminal-button:hover {
-  background: white;
-  box-shadow: 0 0 20px white;
-}
-
-.side-nav {
-  width: 250px;
-  height: 90vh;
-  display: flex;
-  flex-direction: column;
-}
-
-.nav-link {
-  color: var(--primary-glow);
-  text-decoration: none;
-  padding: 15px;
-  border-bottom: 1px solid rgba(0, 255, 65, 0.2);
-}
-
-.nav-link:hover {
-  background: rgba(0, 255, 65, 0.1);
-}
-
-.agency-shell {
-  display: flex;
-  padding: 20px;
-}
-
-.content-area {
-  flex-grow: 1;
-  padding-left: 20px;
-}
-
-.blink-text {
-  animation: blinker 1s linear infinite;
-}
-
-@keyframes blinker {
-  50% { opacity: 0; }
-}
-
-
-/* .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
+/* CRT SCANLINE OVERLAY */
+body::before {
+  content: " ";
+  display: block;
+  position: fixed;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%);
+  z-index: 9999;
+  background-size: 100% 3px;
   pointer-events: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
+.agency-shell { display: flex; height: 100vh; width: 100vw; animation: start-flicker 0.4s ease-in; }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.side-hud {
+  width: 240px;
+  border-right: 1px solid var(--terminal-dim);
   display: flex;
   flex-direction: column;
-  align-items: center;
+  padding: 40px 15px;
+  gap: 10px;
+  background: rgba(0, 10, 0, 0.8);
+  backdrop-filter: blur(5px);
+}
+
+.content-viewport { flex-grow: 1; padding: 40px; overflow-y: auto; position: relative; background: rgba(0,0,0,0.4); }
+
+.clearance-badge {
+  font-size: 0.7rem;
+  padding: 10px;
+  border-bottom: 1px solid var(--terminal-dim);
+  margin-bottom: 20px;
+  letter-spacing: 2px;
+}
+
+.hud-link {
+  color: var(--terminal-green);
+  text-decoration: none;
+  font-size: 0.85rem;
+  padding: 12px;
+  letter-spacing: 2px;
+  transition: 0.2s;
+  display: block;
+}
+.hud-link:hover { background: var(--terminal-dim); text-shadow: 0 0 10px var(--terminal-green); border-left: 3px solid var(--terminal-green); }
+.terminate { color: var(--security-red); border: none; background: none; cursor: pointer; text-align: left; margin-top: auto; }
+
+.hud-bracket, .hud-frame {
+  position: relative;
+  padding: 20px;
+  background: rgba(0, 255, 65, 0.03);
+  border: 1px solid rgba(0, 255, 65, 0.1);
+  margin-bottom: 20px;
+  animation: start-flicker 0.3s ease-in;
+}
+.hud-frame::before, .hud-bracket::before { content: ""; position: absolute; top: -2px; left: -2px; width: 15px; height: 15px; border-top: 3px solid var(--terminal-green); border-left: 3px solid var(--terminal-green); }
+.hud-frame::after, .hud-bracket::after { content: ""; position: absolute; bottom: -2px; right: -2px; width: 15px; height: 15px; border-bottom: 3px solid var(--terminal-green); border-right: 3px solid var(--terminal-green); }
+
+.terminal-input {
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid var(--terminal-dim);
+  border-left: 4px solid var(--terminal-green);
+  color: var(--terminal-green);
+  padding: 14px;
+  font-family: var(--font-console);
+  outline: none;
+  width: 100%;
+}
+.terminal-input:focus { background: var(--terminal-dim); box-shadow: 0 0 15px var(--terminal-dim); }
+
+.terminal-button {
+  background: var(--terminal-green);
+  color: black;
+  border: none;
+  padding: 12px 24px;
+  font-family: var(--font-console);
+  font-weight: bold;
+  cursor: pointer;
+  clip-path: polygon(5% 0, 100% 0, 95% 100%, 0% 100%);
+  transition: 0.3s;
+}
+.terminal-button:hover { background: #fff; box-shadow: 0 0 20px #fff; transform: translateY(-2px); }
+
+/* FINGERPRINT ANIMATION */
+.fingerprint-scanner { transition: 0.3s; color: var(--terminal-dim); }
+.pulse-green {
+  color: var(--terminal-green) !important;
+  filter: drop-shadow(0 0 10px var(--terminal-green));
+  animation: fingerprint-pulse 0.5s infinite alternate;
+}
+
+@keyframes fingerprint-pulse {
+  from { transform: scale(1); opacity: 0.7; }
+  to { transform: scale(1.1); opacity: 1; }
+}
+
+@keyframes start-flicker {
+  0% { opacity: 0; transform: skewX(-10deg); }
+  50% { opacity: 0.8; transform: skewX(0deg); }
+  100% { opacity: 1; }
+}
+.blink-text { animation: blink 1s step-end infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+/* Keep all your existing CSS, just update/replace these sections */
+
+/* ENHANCED TERMINATE BUTTON - KEPT IN NAV BOTTOM */
+.terminate { 
+  color: var(--security-red) !important; 
+  border: 1px solid var(--security-red) !important; 
+  background: rgba(255, 0, 0, 0.05) !important; 
+  cursor: pointer; 
+  text-align: center !important; 
+  margin-top: auto; 
+  padding: 12px !important;
+  font-family: var(--font-console);
+  font-weight: bold;
+  letter-spacing: 2px;
+  transition: 0.3s ease;
+  clip-path: polygon(0 0, 100% 0, 100% 70%, 80% 100%, 0 100%);
+}
+
+.terminate:hover {
+  background: var(--security-red) !important;
+  color: black !important;
+  box-shadow: 0 0 20px var(--security-red);
+  transform: translateY(-2px);
+}
+
+/* SUBTLE SCANLINE FOR VAULTS */
+.integrity-bar {
+  width: 100%;
+  height: 10px;
+  background: #000;
+  border: 1px solid var(--terminal-dim);
+  margin: 10px 0;
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  background: var(--terminal-green);
+  box-shadow: 0 0 10px var(--terminal-green);
+}
+
+/* Tactical Overlay Popup */
+.tactical-overlay {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  z-index: 10000;
 }
 
-.App-link {
-  color: #61dafb;
+.popup-content {
+  width: 400px;
+  background: #000;
+  border: 1px solid var(--terminal-green);
+  box-shadow: 0 0 30px rgba(0, 255, 65, 0.2);
+  padding: 30px;
+  text-align: center;
+  position: relative;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-} */
+.popup-content.error {
+  border-color: var(--security-red);
+  box-shadow: 0 0 30px rgba(255, 0, 0, 0.2);
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: 1px solid var(--terminal-dim);
+  color: var(--terminal-green);
+  cursor: pointer;
+  font-family: var(--font-console);
+}
+
+.close-btn:hover {
+  background: var(--terminal-green);
+  color: #000;
+}
+
+/* Unique Amber Styling for Admin to differentiate from Red Logout */
+.admin-link {
+  color: #ffb000 !important; /* Amber/Gold Alert color */
+
+  margin-top: 150px; /* More space from standard links */
+  padding: 15px 10px;
+  text-shadow: 0 0 8px rgba(255, 176, 0, 0.6);
+  letter-spacing: 2px;
+  font-weight: bold;
+  display: block;
+  transition: all 0.3s ease;
+}
+
+.admin-link:hover {
+  background: rgba(255, 176, 0, 0.1);
+  color: #fff !important;
+  box-shadow: inset 5px 0 0 #ffb000; /* Sidebar indicator on hover */
+}
+
+/* Custom Styling for the Number Input */
+input[type="number"].terminal-input {
+  appearance: textfield; /* Removes default arrows in some browsers */
+  width: 60px;
+  text-align: center;
+  color: var(--terminal-green);
+  font-family: var(--font-console);
+  border: 1px solid var(--terminal-green);
+  background: rgba(0, 255, 65, 0.05);
+  padding: 5px;
+}
+
+/* Custom Arrows for Chrome/Safari/Edge */
+input[type="number"].terminal-input::-webkit-outer-spin-button,
+input[type="number"].terminal-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+  cursor: pointer;
+  /* We can't style these easily, so we hide them and 
+     recommend using the up/down keys or typing */
+}
+
+input[type="number"].terminal-input:focus {
+  outline: none;
+  box-shadow: 0 0 10px var(--terminal-green);
+  background: rgba(0, 255, 65, 0.1);
+}

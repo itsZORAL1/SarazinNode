@@ -11,7 +11,29 @@ class ArtifactService {
             include: [{ model: Vault, as: 'vault' }]
         });
     }
+// services/artifactService.js
+// services/artifactService.js
+async searchArtifacts(filters) {
+    const { era, danger, status } = filters;
+    let whereClause = {};
 
+    // 1. DUAL SEARCH LOGIC: Search name OR era if 'era' param is provided
+    if (era) {
+        whereClause[Op.or] = [
+            { name: { [Op.iLike]: `%${era}%` } },
+            { originEra: { [Op.iLike]: `%${era}%` } }
+        ];
+    }
+
+    // 2. Add other filters if they exist
+    if (danger) whereClause.dangerLevel = danger;
+    if (status) whereClause.status = status;
+
+    return await Artifact.findAll({ 
+        where: whereClause,
+        include: [{ model: Vault, as: 'vault' }] 
+    });
+}
     async getById(id) {
         return await Artifact.findByPk(id, {
             include: [{ model: Vault, as: 'vault' }]
@@ -33,7 +55,7 @@ class ArtifactService {
 
         return artifact;
     }
-
+     
     async removeArtifact(id) {
         const artifact = await Artifact.findByPk(id);
         if (artifact) await artifact.destroy();

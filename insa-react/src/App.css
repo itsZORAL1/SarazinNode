@@ -1,4 +1,68 @@
-.App {
+.terminal-input {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid var(--primary-glow);
+  color: var(--primary-glow);
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  outline: none;
+}
+
+.terminal-button {
+  background: var(--primary-glow);
+  color: black;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-weight: bold;
+  width: 100%;
+  transition: all 0.3s;
+}
+
+.terminal-button:hover {
+  background: white;
+  box-shadow: 0 0 20px white;
+}
+
+.side-nav {
+  width: 250px;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-link {
+  color: var(--primary-glow);
+  text-decoration: none;
+  padding: 15px;
+  border-bottom: 1px solid rgba(0, 255, 65, 0.2);
+}
+
+.nav-link:hover {
+  background: rgba(0, 255, 65, 0.1);
+}
+
+.agency-shell {
+  display: flex;
+  padding: 20px;
+}
+
+.content-area {
+  flex-grow: 1;
+  padding-left: 20px;
+}
+
+.blink-text {
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  50% { opacity: 0; }
+}
+
+
+/* .App {
   text-align: center;
 }
 
@@ -35,4 +99,4 @@
   to {
     transform: rotate(360deg);
   }
-}
+} */

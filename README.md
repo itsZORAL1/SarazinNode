@@ -1,3 +1,7 @@
+>> [CORE ACCESS NOTE]: For immediate evaluation without local setup, the Agency HUD is live at:
+>> Live Link: https://project-chronos-g4qk.onrender.com
+**Note**: Initial load may take 30–60 seconds if the instance is currently "cold." after  that login with admin profile with **email**:admin@chronos.agency & **pssd**:chronos2026
+
 # Project Chronos: Temporal Archive and Containment System
 
 Project Chronos is a high-security administrative and forensics framework designed for the specialized task of monitoring temporal instabilities and managing the physical sequestration of artifacts discovered outside their native era vectors. The system is predicated on the **Law of Temporal Continuity**, treating history as a series of rigid **Era Vectors**.
@@ -8,7 +12,7 @@ The system features **Vertical Filtering** (Clearance levels 1-5) and **Horizont
 
 ---
 
-## 🌌 1. System Concept and Forensic Logic
+## 1. System Concept and Forensic Logic
 
 The core philosophy of Project Chronos is centered on the prevention of causal paradoxes. The application functions as a digital "Evidence Locker" for history itself.
 
@@ -20,7 +24,7 @@ The core philosophy of Project Chronos is centered on the prevention of causal p
 
 ---
 
-## 📂 2. Technical Architecture Details
+## 2. Technical Architecture Details
 
 The project follows a modular **Service-Oriented Architecture (SOA)** to decouple business logic from API routing and security enforcement.
 
@@ -47,7 +51,7 @@ The project follows a modular **Service-Oriented Architecture (SOA)** to decoupl
 
 ---
 
-## ⚛️ 3. Frontend Implementation (React & Axios)
+## 3. Frontend Implementation (React & Axios)
 
 The frontend is a specialized **"HUD" (Heads-Up Display)** for Agency Personnel.
 
@@ -66,7 +70,7 @@ Designed specifically for GitHub Codespaces and cloud development environments w
 
 ---
 
-## 🚀 4. Deployment & Initialization Protocol
+## 4. Deployment & Initialization Protocol
 
 
 ### 0. Environment Configuration (.env)
@@ -114,6 +118,7 @@ npx sequelize-cli db:seed:all
 
 ### 4. Operational Protocols & Testing
 
+>> If to acces locally 
 #### 1. Launching Services
 
 * **Backend API** : ```node server.js``` (Default Port 3000)
@@ -133,8 +138,11 @@ To manually inspect the Registry or Personnel tables:
 | **Session Revocation** | `POST /api/logout`       | Token invalidated immediately via DB purge           |
 | **Port Swapping**      | Load Port 3001           | `api.js` automatically bridges requests to Port 3000 |
 
+### 5. Cloud-Native Deployment (Docker & Render)
+The system is containerized for high-availability deployment. The image is hosted on Docker Hub and managed via Render for the compute layer and Supabase for the persistence layer.
 
-### 5. Current Development Status
+
+### 6. Current Development Status
 
 Project Chronos is undergoing continuous expansion. While the core Capture-and-Contain loop is operational, the architecture is designed to accommodate additional modular services. I am aware that further services could be integrated to enhance system utility.
 

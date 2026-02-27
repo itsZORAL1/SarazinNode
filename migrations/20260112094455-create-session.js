@@ -9,7 +9,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       token: { 
-        type: Sequelize.TEXT, // Changed from STRING to TEXT for long JWTs
+        type: Sequelize.TEXT, 
         allowNull: false, 
         unique: true 
       },
@@ -19,8 +19,8 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
-      ipAddress: { type: Sequelize.STRING }, // Track the source IP
-      userAgent: { type: Sequelize.STRING }, // Track the device/browser
+      ipAddress: { type: Sequelize.STRING }, 
+      userAgent: { type: Sequelize.STRING }, 
       expiresAt: { type: Sequelize.DATE },
       createdAt: { allowNull: false, type: Sequelize.DATE },
       updatedAt: { allowNull: false, type: Sequelize.DATE }

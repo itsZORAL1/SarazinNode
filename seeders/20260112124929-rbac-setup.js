@@ -5,9 +5,9 @@ module.exports = {
 
     const permissionsList = [
       { scope: 'user:read' }, { scope: 'user:write' }, { scope: 'user:delete' },
-      { scope: 'artifact:read' }, { scope: 'artifact:write' }, { scope: 'artifact:delete' }, // Replaced 'device'
-      { scope: 'anomaly:read' }, { scope: 'anomaly:write' }, { scope: 'anomaly:delete' },    // New: Time Rips
-      { scope: 'mission:read' }, { scope: 'mission:write' },                                // New: Operations
+      { scope: 'artifact:read' }, { scope: 'artifact:write' }, { scope: 'artifact:delete' }, 
+      { scope: 'anomaly:read' }, { scope: 'anomaly:write' }, { scope: 'anomaly:delete' },    
+      { scope: 'mission:read' }, { scope: 'mission:write' },                                
       { scope: 'self:read' }, { scope: 'me:write' },
       { scope: 'session:read' }, { scope: 'session:write' }, { scope: 'session:delete' },
       { scope: 'group:read' }, { scope: 'group:write' }, { scope: 'group:delete' }

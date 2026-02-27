@@ -5,7 +5,7 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
    
-// Inside User class in models/user.js
+
 static associate(models) {
   this.hasMany(models.Mission, { foreignKey: 'leadAgentId', as: 'missions' });
   this.hasMany(models.AuditLog, { foreignKey: 'userId', as: 'logs' });
@@ -13,7 +13,7 @@ static associate(models) {
   this.hasMany(models.Session, { foreignKey: 'userId', as: 'sessions' });
 }
   }
-// models/user.js
+
 User.init({
   firstname: DataTypes.STRING,
   lastname: DataTypes.STRING,
@@ -25,15 +25,15 @@ User.init({
   },
   password: { 
     type: DataTypes.STRING, 
-    allowNull: false // Must be hashed later!
+    allowNull: false 
   },
   clearanceLevel: { 
     type: DataTypes.INTEGER, 
-    defaultValue: 1 // 1: Guest, 5: O5-Council
+    defaultValue: 1 
   },
   accountStatus: { 
     type: DataTypes.STRING, 
-    defaultValue: 'Active' // Active, Suspended, MIA
+    defaultValue: 'Active' 
   }
 }, {
   sequelize,

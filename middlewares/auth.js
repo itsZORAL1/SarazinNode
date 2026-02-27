@@ -20,14 +20,14 @@ const CheckAuth = async (req, res, next) => {
         return res.status(403).json({ message: "Invalid or expired token" });
     }
 
-    // decoded should contain the user's id and clearance level
+    
     req.user = decoded; 
     next();
 };
 
 const CheckClearance = (level) => {
     return (req, res, next) => {
-        // Change req.user.clearance to req.user.clearanceLevel
+        
         if (!req.user || req.user.clearanceLevel < level) {
             return res.status(403).json({ 
                 error: "INSUFFICIENT_CLEARANCE", 

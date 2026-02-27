@@ -8,7 +8,7 @@ const AdminPanel = () => {
   const [logs, setLogs] = useState([]);
   const [msg, setMsg] = useState(null);
 
-  // Fetch Mission Logs on mount
+  
   useEffect(() => {
     const fetchLogs = async () => {
       try {
@@ -49,7 +49,7 @@ const AdminPanel = () => {
         </form>
       </div>
 
-      {/* MISSION LOGS SECTION */}
+      {}
       <div className="hud-frame" style={{ marginTop: '30px' }}>
         <h3>>> AUDIT_LOG: MISSION_FINALIZATION</h3>
         <div className="log-table" style={{ maxHeight: '300px', overflowY: 'auto' }}>

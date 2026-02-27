@@ -14,7 +14,7 @@
 body {
   margin: 0;
   background-color: var(--black-void);
-  /* MATRIX GRID EFFECT */
+ 
   background-image: 
     linear-gradient(rgba(0, 255, 65, 0.05) 1px, transparent 1px),
     linear-gradient(90deg, rgba(0, 255, 65, 0.05) 1px, transparent 1px);
@@ -25,7 +25,7 @@ body {
   text-transform: uppercase;
 }
 
-/* CRT SCANLINE OVERLAY */
+
 body::before {
   content: " ";
   display: block;
@@ -108,7 +108,7 @@ body::before {
 }
 .terminal-button:hover { background: #fff; box-shadow: 0 0 20px #fff; transform: translateY(-2px); }
 
-/* FINGERPRINT ANIMATION */
+
 .fingerprint-scanner { transition: 0.3s; color: var(--terminal-dim); }
 .pulse-green {
   color: var(--terminal-green) !important;
@@ -128,9 +128,7 @@ body::before {
 }
 .blink-text { animation: blink 1s step-end infinite; }
 @keyframes blink { 50% { opacity: 0; } }
-/* Keep all your existing CSS, just update/replace these sections */
 
-/* ENHANCED TERMINATE BUTTON - KEPT IN NAV BOTTOM */
 .terminate { 
   color: var(--security-red) !important; 
   border: 1px solid var(--security-red) !important; 
@@ -153,7 +151,7 @@ body::before {
   transform: translateY(-2px);
 }
 
-/* SUBTLE SCANLINE FOR VAULTS */
+
 .integrity-bar {
   width: 100%;
   height: 10px;
@@ -169,7 +167,7 @@ body::before {
   box-shadow: 0 0 10px var(--terminal-green);
 }
 
-/* Tactical Overlay Popup */
+
 .tactical-overlay {
   position: fixed;
   top: 0; left: 0; width: 100vw; height: 100vh;
@@ -211,11 +209,11 @@ body::before {
   color: #000;
 }
 
-/* Unique Amber Styling for Admin to differentiate from Red Logout */
-.admin-link {
-  color: #ffb000 !important; /* Amber/Gold Alert color */
 
-  margin-top: 150px; /* More space from standard links */
+.admin-link {
+  color: #ffb000 !important; 
+
+  margin-top: 150px; 
   padding: 15px 10px;
   text-shadow: 0 0 8px rgba(255, 176, 0, 0.6);
   letter-spacing: 2px;
@@ -227,12 +225,12 @@ body::before {
 .admin-link:hover {
   background: rgba(255, 176, 0, 0.1);
   color: #fff !important;
-  box-shadow: inset 5px 0 0 #ffb000; /* Sidebar indicator on hover */
+  box-shadow: inset 5px 0 0 #ffb000; 
 }
 
-/* Custom Styling for the Number Input */
+
 input[type="number"].terminal-input {
-  appearance: textfield; /* Removes default arrows in some browsers */
+  appearance: textfield; 
   width: 60px;
   text-align: center;
   color: var(--terminal-green);
@@ -242,14 +240,13 @@ input[type="number"].terminal-input {
   padding: 5px;
 }
 
-/* Custom Arrows for Chrome/Safari/Edge */
+
 input[type="number"].terminal-input::-webkit-outer-spin-button,
 input[type="number"].terminal-input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
   cursor: pointer;
-  /* We can't style these easily, so we hide them and 
-     recommend using the up/down keys or typing */
+
 }
 
 input[type="number"].terminal-input:focus {

@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-// 1. Import Controllers
+
 const authController = require('../controllers/auth');
 
-// 2. Import Sub-Routers
+
 const userRoutes = require('./users');
 const groupRoutes = require('./groups');
 const artifactRoutes = require('./artifacts');
@@ -13,21 +13,19 @@ const anomalyRoutes = require('./anomalies');
 const intelligenceRoutes = require('./intelligence'); 
 const vaultRoutes = require('./vaults');     
 const containmentRoutes = require('./containment');
-
-// 3. Define Middlewares
 const { CheckAuth } = require('../middlewares/auth');
 
-// --- PUBLIC ROUTES ---
+
 router.post('/login', authController.login);
 router.post('/register', authController.register); 
 
-// --- PROTECTED ROUTES ---
+
 router.use('/users', userRoutes);
 router.use('/groups', groupRoutes);
 router.use('/artifacts', artifactRoutes);
-router.use('/missions', missionRoutes);     // ADD THIS
-router.use('/anomalies', anomalyRoutes);    // ADD THIS
-router.use('/intelligence', intelligenceRoutes); // ADD THIS
+router.use('/missions', missionRoutes);     
+router.use('/anomalies', anomalyRoutes);    
+router.use('/intelligence', intelligenceRoutes); 
 
 
 router.get('/admin/mission-logs', CheckAuth, async (req, res) => {
@@ -35,7 +33,7 @@ router.get('/admin/mission-logs', CheckAuth, async (req, res) => {
         const { AuditLog, User } = require('../models');
         const logs = await AuditLog.findAll({
             where: { action: 'MISSION_FINALIZED' },
-            // We use 'author' as the alias to match the frontend expectations
+            
             include: [{ 
                 model: User, 
                 as: 'author', 
@@ -49,7 +47,7 @@ router.get('/admin/mission-logs', CheckAuth, async (req, res) => {
     }
 });
 
-// --- LOGOUT ---
+
 router.post('/logout', CheckAuth, authController.logout);
 router.use('/vaults', vaultRoutes);                // ADD THIS
 router.use('/containment', containmentRoutes);

@@ -9,7 +9,7 @@ const { Mission, Anomaly } = require('../models');
 router.get('/', CheckAuth, async (req, res) => {
     try {
         const missions = await Mission.findAll({
-            // THIS JOIN IS REQUIRED FOR THE FRONTEND TO SEE 'anomaly.location'
+            
             include: [{ 
                 model: Anomaly, 
                 as: 'anomaly' 
@@ -29,7 +29,7 @@ router.post('/report', CheckAuth, CheckPermission('anomaly:write', 4), async (re
             type: req.body.description,
             severity: req.body.severity,
             timelineId: req.body.timelineId,
-            // BRANCHING: Set status based on the checkbox
+            
             status: req.body.isArtifactMission ? 'RECOVERY_REQUIRED' : 'OPEN'
         });
 

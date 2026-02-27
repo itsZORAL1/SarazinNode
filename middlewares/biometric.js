@@ -1,4 +1,3 @@
-// middlewares/biometric.js
 const models = require('../models');
 
 module.exports = async (req, res, next) => {
@@ -9,7 +8,7 @@ module.exports = async (req, res, next) => {
             return res.status(403).json({ error: "BIOMETRIC_REQUIRED", message: "Retina scan required." });
         }
 
-        // Use models.BiometricKey to ensure we are accessing the exported object
+        
         if (!models.BiometricKey) {
             throw new Error("BiometricKey model is not loaded in models/index.js");
         }

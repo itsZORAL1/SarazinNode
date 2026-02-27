@@ -1,6 +1,6 @@
 const ArtifactService = require('../services/artifactService');
 
-// 1. LIST ALL (with Danger Level logic)
+
 async function listArtifacts(req, res) {
     try {
         const userClearance = req.user.clearanceLevel || 0;
@@ -11,7 +11,7 @@ async function listArtifacts(req, res) {
     }
 }
 
-// 2. CREATE (Uses the Service for Ingestion + Auditing)
+
 async function createArtifact(req, res) {
     try {
         const artifact = await ArtifactService.ingestArtifact(
@@ -26,10 +26,10 @@ async function createArtifact(req, res) {
     }
 }
 
-// controllers/artifact.js
+
 async function search(req, res) {
     try {
-        // req.query is the object like { era: 'Roman', danger: 5 }
+        
         const results = await ArtifactService.searchArtifacts(req.query);
         res.status(200).json(results);
     } catch (error) {
@@ -37,13 +37,13 @@ async function search(req, res) {
     }
 }
 
-// 3. GET BY ID (with your Security Check logic)
+
 async function getArtifactById(req, res) {
     try {
         const artifact = await ArtifactService.getById(req.params.id);
         if (!artifact) return res.status(404).json({ message: "Artifact missing from timeline" });
 
-        // Your original Vertical Security Check
+        
         if (artifact.dangerLevel > req.user.clearanceLevel) {
             return res.status(403).json({ message: "ACCESS DENIED: Item danger level exceeds your clearance." });
         }
@@ -53,10 +53,10 @@ async function getArtifactById(req, res) {
     }
 }
 
-// 4. DELETE (with your Level 5 check logic)
+
 async function deleteArtifact(req, res) {
     try {
-        // Your original Level 5 check
+        
         if (req.user.clearanceLevel < 5) {
             return res.status(403).json({ message: "CRITICAL: Level 5 clearance required for timeline erasure." });
         }
@@ -69,7 +69,7 @@ async function deleteArtifact(req, res) {
     }
 }
 
-// 5. UPDATE (Directly in controller)
+
 async function updateArtifact(req, res) {
     try {
         const artifact = await ArtifactService.getById(req.params.id);
@@ -86,7 +86,7 @@ async function updateArtifact(req, res) {
     }
 }
 
-// --- CRITICAL FIX: EXPORT EVERYTHING ---
+
 module.exports = { 
     listArtifacts, 
     createArtifact, 

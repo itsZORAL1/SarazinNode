@@ -3,7 +3,7 @@ const { Group, User } = require("../models");
 async function listGroups(req, res) {
     try {
         const groups = await Group.findAll({
-            // (Many-to-Many)
+            
             include: [{ model: User, as: 'users' }]
         });
         res.status(200).json(groups);

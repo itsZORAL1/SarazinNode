@@ -11,11 +11,11 @@ class ContainmentService {
         const artifactCount = vault.artifacts.length;
         const overCapacity = artifactCount > vault.maxCapacity;
         
-        // Logic: Find any artifact that is too dangerous for this vault's protocol
+        
         const dangerousArtifacts = vault.artifacts.filter(a => a.dangerLevel > 4);
 
         if (overCapacity || dangerousArtifacts.length > 0) {
-            // 1. Create an Incident Report (The Paper Trail)
+           
             const report = await IncidentReport.create({
                 vaultId: vault.id,
                 title: "CONTAINMENT INSTABILITY DETECTED",
@@ -26,7 +26,7 @@ class ContainmentService {
                 status: "OPEN"
             });
 
-            // 2. Log it as a Security Event
+           
             await AuditLog.create({
                 action: 'SECURITY_ALERT',
                 targetId: `VAULT_${vault.id}`,

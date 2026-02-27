@@ -9,7 +9,7 @@ class IntelligenceService {
         let riskStatus = "STABLE";
         let securityNotice = null;
 
-        // --- DYNAMIC RISK LOGIC ---
+        
         if (anomaliesCount > 0 && anomaliesCount <= 2) {
             riskStatus = "STABLE";
         } else if (anomaliesCount > 2 && anomaliesCount <= 5) {
@@ -17,7 +17,7 @@ class IntelligenceService {
             securityNotice = "CAUTION: Multiple temporal disturbances detected.";
         } else if (anomaliesCount > 5) {
             riskStatus = "CRITICAL";
-            // The New Security Warning
+            
             securityNotice = "PROTOCOL ZERO INITIATED: Temporal stability below threshold. All agents report for extraction.";
         }
 

@@ -13,15 +13,15 @@ module.exports = {
       email: { 
         type: Sequelize.STRING, 
         allowNull: false, 
-        unique: true // Pentest Fix: Prevent duplicate emails
+        unique: true 
       },
       password: { 
         type: Sequelize.STRING, 
-        allowNull: false // CRITICAL: Every agent needs a secure hash
+        allowNull: false 
       },
       clearanceLevel: { 
         type: Sequelize.INTEGER, 
-        defaultValue: 1 // 1: Trainee, 5: Director
+        defaultValue: 1 
       },
       accountStatus: { 
         type: Sequelize.STRING, 

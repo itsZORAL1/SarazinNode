@@ -7,7 +7,7 @@ const Archive = () => {
   const [loading, setLoading] = useState(false);
   const [scrambledText, setScrambledText] = useState('');
 
-  // Scrambler Logic
+  
   useEffect(() => {
     let interval;
     if (loading) {
@@ -28,7 +28,7 @@ const handleScan = async (e) => {
     setLoading(true);
     setArtifacts([]); 
     try {
-      // The 'era' state variable now acts as a general search term
+      
       const response = await api.get(`/artifacts/search?era=${era}`);
       setTimeout(() => {
         setArtifacts(response.data);
@@ -70,7 +70,7 @@ return (
             <h3 style={{color: 'var(--terminal-green)'}}>{item.name}</h3>
             <p>ERA: {item.originEra}</p>
             
-            {/* NEW: ENHANCED INFO DISPLAY */}
+            {}
             <div style={{ fontSize: '0.65rem', borderTop: '1px solid var(--terminal-dim)', paddingTop: '5px', marginTop: '10px', color: '#aaa' }}>
               <div>LOCATION: VAULT_ID_{item.vaultId}</div>
               <div>DANGER_LEVEL: {item.dangerLevel} / 5</div>

@@ -2,19 +2,25 @@ import axios from 'axios';
 
 const getBackendUrl = () => {
   const currentUrl = window.location.href;
+  const urlObj = new URL(currentUrl);
+
   
   if (currentUrl.includes('github.dev')) {
-    const urlObj = new URL(currentUrl);
-    // Properly swaps the frontend port (3001) for the backend port (3000)
     const backendHostname = urlObj.hostname.replace('-3001', '-3000');
     return `https://${backendHostname}/api`;
   }
-  
+
+
+  if (!currentUrl.includes('localhost')) {
+    return `${urlObj.origin}/api`;
+  }
+
+
   return 'http://localhost:3000/api';
 };
 
 const api = axios.create({
-  baseURL: getBackendUrl(), // USE THE CALCULATED URL HERE
+  baseURL: getBackendUrl(), 
   headers: {
     'Content-Type': 'application/json'
   }

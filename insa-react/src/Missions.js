@@ -40,7 +40,7 @@ const Missions = () => {
     try {
       await api.put(`/missions/${missionId}/finalize`, { artifact: manualArtifact });
       setPopup({ type: 'success', msg: 'MISSION COMPLETE: Timeline Stabilized.' });
-      setRecoveryForm(null); // CRITICAL: Clear the form
+      setRecoveryForm(null); 
       fetchMissions(); 
     } catch (err) {
       setPopup({ type: 'error', msg: 'REPAIR_FAILED: Internal Temporal Error' });
@@ -70,7 +70,7 @@ const Missions = () => {
 
   return (
     <div className="missions-view">
-      {/* SUCCESS/ERROR POPUP WITH CLOSE BUTTON */}
+      {}
       {popup && (
         <div className="tactical-overlay">
           <div className={`popup-content hud-bracket ${popup.type}`}>
@@ -83,7 +83,7 @@ const Missions = () => {
         </div>
       )}
 
-      {/* ARTIFACT RECOVERY POPUP */}
+      {}
       {recoveryForm && (
         <div className="tactical-overlay">
           <div className="popup-content hud-bracket">
@@ -107,7 +107,7 @@ const Missions = () => {
       <h2 className="glow-text">> TEMPORAL COMMAND CENTER</h2>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px', marginTop: '30px' }}>
         
-        {/* LEFT SIDE: REPORT FORM */}
+        {}
         <div className="hud-frame" style={{display:'flex', flexDirection:'column'}}>
           <h3>REPORT DISRUPTION</h3>
           <form onSubmit={reportAnomaly} style={{display:'flex', flexDirection:'column', flexGrow: 1}}>
@@ -119,7 +119,7 @@ const Missions = () => {
             <textarea className="terminal-input" style={{ height: '100px', resize: 'none' }} placeholder="DESCRIBE TEAR" 
               value={anomalyData.description} onChange={e => setAnomalyData({...anomalyData, description: e.target.value})} />
             
-            {/* BOX STYLE CHECKBOX STUCK TO BUTTON */}
+            {}
             <div style={{ border: '1px solid var(--terminal-dim)', padding: '10px', marginTop: 'auto', background: 'rgba(0,0,0,0.3)' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
                 <input 
@@ -140,7 +140,7 @@ const Missions = () => {
           </form>
         </div>
 
-        {/* RIGHT SIDE: ACTIVE OPERATIONS */}
+        {}
         <div className="hud-frame">
           <h3>ACTIVE OPERATIONS</h3>
           <div style={{ height: '400px', overflowY: 'auto' }}>

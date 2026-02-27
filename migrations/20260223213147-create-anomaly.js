@@ -7,7 +7,7 @@ module.exports = {
       type: { type: Sequelize.STRING },
       location: { type: Sequelize.STRING },
       severity: { type: Sequelize.INTEGER },
-      status: { type: Sequelize.STRING, defaultValue: 'OPEN' }, // ADD THIS
+      status: { type: Sequelize.STRING, defaultValue: 'OPEN' }, 
       timelineId: {
         type: Sequelize.INTEGER,
         references: { model: 'Timelines', key: 'id' },

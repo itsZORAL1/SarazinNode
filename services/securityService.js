@@ -2,7 +2,7 @@ const { User, Group, Permission, Session, Device } = require('../models');
 
 class SecurityService {
     async validateSession(token, deviceFingerprint) {
-        // 1. Logic: Anti-Hijacking. Ensure session belongs to the hardware device
+        
         const session = await Session.findOne({ 
             where: { token, deviceFingerprint },
             include: [User] 
@@ -13,7 +13,7 @@ class SecurityService {
     }
 
     async calculatePermissions(userId) {
-        // 2. Logic: Aggregate permissions from all groups a user belongs to
+        
         const user = await User.findByPk(userId, {
             include: [{
                 model: Group,

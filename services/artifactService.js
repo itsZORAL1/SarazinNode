@@ -11,13 +11,12 @@ class ArtifactService {
             include: [{ model: Vault, as: 'vault' }]
         });
     }
-// services/artifactService.js
-// services/artifactService.js
+
 async searchArtifacts(filters) {
     const { era, danger, status } = filters;
     let whereClause = {};
 
-    // 1. DUAL SEARCH LOGIC: Search name OR era if 'era' param is provided
+    
     if (era) {
         whereClause[Op.or] = [
             { name: { [Op.iLike]: `%${era}%` } },
@@ -25,7 +24,7 @@ async searchArtifacts(filters) {
         ];
     }
 
-    // 2. Add other filters if they exist
+    
     if (danger) whereClause.dangerLevel = danger;
     if (status) whereClause.status = status;
 
@@ -43,7 +42,7 @@ async searchArtifacts(filters) {
     async ingestArtifact(data, user, ip, userAgent) {
         const artifact = await Artifact.create(data);
         
-        // Automated Security Audit
+        
         await AuditLog.create({
             userId: user.id,
             action: 'CREATE_ARTIFACT',

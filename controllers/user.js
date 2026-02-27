@@ -1,12 +1,12 @@
 const { User, Device, Group } = require("../models");
 
-// 1. GET ALL USERS 
+
 async function listUsers(req, res) {
     try {
         const users = await User.findAll({
         
-            include: [ // One-to-Many
-                { model: Group, as: 'groups' }    // Many-to-Many
+            include: [
+                { model: Group, as: 'groups' }   
             ]
         });
         return res.status(200).send(users);
@@ -15,7 +15,7 @@ async function listUsers(req, res) {
     }
 }
 
-// 2. GET USER BY ID 
+ 
 async function getUserById(req, res) {
     try {
         const user = await User.findByPk(req.params.id, {
@@ -33,7 +33,7 @@ async function getUserById(req, res) {
     }
 }
 
-// 3. CREATE USER 
+
 async function createUser(req, res) {
     try {
         const user = await User.create(req.body);
@@ -43,7 +43,7 @@ async function createUser(req, res) {
     }
 }
 
-// 4. UPDATE USER
+
 async function updateUser(req, res) {
     try {
         const [updated] = await User.update(req.body, { where: { id: req.params.id } });
@@ -56,7 +56,7 @@ async function updateUser(req, res) {
     } catch (error) { res.status(500).send(error.message); }
 }
 
-// 5. DELETE USER
+
 async function deleteUser(req, res) {
     try {
         const deleted = await User.destroy({ where: { id: req.params.id } });
@@ -74,7 +74,7 @@ async function addUserToGroup(req, res) {
             return res.status(404).send("User or Group not found");
         }
 
-        // Sequelize magic method for Many-to-Many
+        
         await user.addGroup(group); 
         
         res.status(200).send(`User ${user.firstname} added to Group ${group.name}`);

@@ -16,7 +16,7 @@ module.exports = {
         dangerLevel: 1,
         status: 'SECURE',
         vaultId: vaultId,
-        anomalyId: anomalyId, // Linking to the detected Anomaly
+        anomalyId: anomalyId, 
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -27,7 +27,7 @@ module.exports = {
         dangerLevel: 5,
         status: 'CONTAINED',
         vaultId: vaultId,
-        anomalyId: anomalyId, // High-level link
+        anomalyId: anomalyId,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -38,7 +38,7 @@ module.exports = {
         dangerLevel: 3,
         status: 'RESEARCH',
         vaultId: vaultId,
-        anomalyId: anomalyId, // Research link
+        anomalyId: anomalyId,
         createdAt: new Date(),
         updatedAt: new Date()
       }

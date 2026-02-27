@@ -1,4 +1,3 @@
-// Update the first line to include sequelize
 const { Mission, Anomaly, AuditLog, sequelize } = require('../models'); 
 
 class MissionService {
@@ -18,7 +17,7 @@ class MissionService {
         return mission;
     }
 
-// services/missionService.js
+
 async completeMission(missionId, user, body) {
     const { Mission, Anomaly, AuditLog, Artifact } = require('../models');
     
@@ -34,15 +33,15 @@ async completeMission(missionId, user, body) {
         const previousStatus = mission.anomaly.status;
         await mission.anomaly.update({ status: 'CLOSED' });
 
-        // ONLY create an artifact if manual data was sent from the popup
+        
         if (previousStatus === 'RECOVERY_REQUIRED' && body.artifact) {
             await Artifact.create({
-                name: body.artifact.name, // Manually entered name
-                serialNumber: body.artifact.serial, // Manually entered serial
+                name: body.artifact.name,
+                serialNumber: body.artifact.serial, 
                 originEra: mission.anomaly.location,
                 dangerLevel: mission.anomaly.severity || 1,
                 status: 'SECURED_IN_VAULT',
-                vaultId: body.artifact.vaultId || 1, // Manually selected vault
+                vaultId: body.artifact.vaultId || 1, 
                 anomalyId: mission.anomaly.id
             });
         }

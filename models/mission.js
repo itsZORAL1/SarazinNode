@@ -10,9 +10,9 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
 static associate(models) {
-  // A mission is led by an Agent (User)
+ 
   this.belongsTo(models.User, { foreignKey: 'leadAgentId', as: 'agent' });
-  // A mission targets a specific Anomaly
+  
   this.belongsTo(models.Anomaly, { foreignKey: 'anomalyId', as: 'anomaly' });
 }
   }

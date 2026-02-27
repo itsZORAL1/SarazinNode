@@ -2,7 +2,7 @@ const { Vault, Artifact } = require('../models');
 
 class VaultService {
     async findOptimalVault(dangerLevel) {
-        // Logic: Level 5 items MUST go to "Lead-Lined" vaults
+        
         const vaults = await Vault.findAll();
         
         const bestVault = vaults.find(v => {

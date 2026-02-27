@@ -4,7 +4,7 @@ class ParadoxService {
     async triggerParadoxCheck(vaultId) {
         const roll = Math.random() * 100;
         
-        // 5% chance of a paradox if vault is not "Quantum Shielded"
+        
         if (roll < 5) {
             const vault = await Vault.findByPk(vaultId);
             if (!vault.securityProtocol.includes('Quantum')) {
@@ -13,7 +13,7 @@ class ParadoxService {
                     location: vault.locationName,
                     severity: 3,
                     status: 'OPEN',
-                    timelineId: 1 // Default to Prime
+                    timelineId: 1 
                 });
             }
         }

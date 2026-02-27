@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
 static associate(models) {
-  // Every log entry MUST be tied to a user for accountability
+  
   this.belongsTo(models.User, { foreignKey: 'userId', as: 'author' });
 }
   }
@@ -18,7 +18,7 @@ AuditLog.init({
     userId: DataTypes.INTEGER,
     action: DataTypes.STRING,
     targetId: DataTypes.STRING,
-    details: DataTypes.TEXT, // <--- ADD THIS LINE
+    details: DataTypes.TEXT, 
     ipAddress: DataTypes.STRING,
     userAgent: DataTypes.STRING
   }, {

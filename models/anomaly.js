@@ -14,12 +14,12 @@ module.exports = (sequelize, DataTypes) => {
      this.hasMany(models.Artifact, { foreignKey: 'anomalyId', as: 'artifacts' });
     }
   }
-// models/anomaly.js
+
 Anomaly.init({
   type: DataTypes.STRING,
   location: DataTypes.STRING,
   severity: DataTypes.INTEGER,
-  status: DataTypes.STRING, // ADD THIS
+  status: DataTypes.STRING, 
   timelineId: DataTypes.INTEGER,
 }, {
   sequelize,

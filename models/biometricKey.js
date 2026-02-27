@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     keyHash: DataTypes.STRING
   }, {
     sequelize,
-    modelName: 'BiometricKey', // THIS MUST MATCH
+    modelName: 'BiometricKey', 
   });
   return BiometricKey;
 };

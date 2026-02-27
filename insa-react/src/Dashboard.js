@@ -17,7 +17,7 @@ const Dashboard = () => {
     fetchStats();
   }, []);
 
-  // Logic for Timeline Health calculation
+  
   const healthPercent = Math.max(100 - (data.metrics.unresolvedAnomalies * 10), 10);
   const healthColor = healthPercent > 70 ? 'var(--terminal-green)' : healthPercent > 40 ? 'orange' : 'red';
 
@@ -28,7 +28,7 @@ const Dashboard = () => {
         <div className="status-bar">UPLINK STABLE // NODE: {data.agencyStatus}</div>
       </header>
 
-      {/* NEW: TIMELINE HEALTH CHART */}
+      {}
       <div className="hud-bracket" style={{ marginTop: '30px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <label>TIMELINE STABILITY INDEX</label>

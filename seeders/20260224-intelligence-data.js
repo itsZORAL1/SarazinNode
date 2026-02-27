@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    // 1. Get the existing Timeline or create if missing
+
     let timelineId;
     const [existingTimeline] = await queryInterface.sequelize.query(
       `SELECT id FROM "Timelines" WHERE name = 'Prime Timeline (Mainline)' LIMIT 1;`
@@ -20,13 +20,12 @@ module.exports = {
       timelineId = timelines[0].id;
     }
 
-    // 2. Create Anomalies
-    // Inside your seeder's up function
+ 
 await queryInterface.bulkInsert('Anomalies', [
   {
-    type: 'The Victorian Laptop', // Was 'name'
-    location: '1888 London',      // Was 'description'
-    severity: 4,                  // Was 'dangerLevel'
+    type: 'The Victorian Laptop', 
+    location: '1888 London',      
+    severity: 4,                
     status: 'OPEN',
     timelineId: timelineId,
     createdAt: new Date(),
@@ -34,7 +33,7 @@ await queryInterface.bulkInsert('Anomalies', [
   }
 ]);
 
-    // 3. Log this in Audit Logs (The Professional Touch)
+   
     const [admin] = await queryInterface.sequelize.query(`SELECT id FROM "Users" WHERE email = 'admin@chronos.agency' LIMIT 1;`);
     if (admin[0]) {
       await queryInterface.bulkInsert('AuditLogs', [{

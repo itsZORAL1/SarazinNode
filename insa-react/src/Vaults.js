@@ -4,7 +4,7 @@ import api from './api';
 const Vaults = () => {
   const [vaults, setVaults] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [popup, setPopup] = useState(null); // For results
+  const [popup, setPopup] = useState(null); 
 
   const fetchVaults = async () => {
     try {
@@ -25,7 +25,7 @@ const handleSweep = async (vaultId) => {
       setPopup({ type: 'success', msg: 'SWEEP COMPLETE: NO LEAKS FOUND' });
     }
     
-    // FIX: Automatically close the popup after 3 seconds so it doesn't freeze
+    
     setTimeout(() => {
       setPopup(null);
     }, 3000);

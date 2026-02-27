@@ -1,166 +1,148 @@
-# SarazinNode
+# Project Chronos: Temporal Archive and Containment System
 
-## Step 1: Initialize the Project
+Project Chronos is a high-security administrative and forensics framework designed for the specialized task of monitoring temporal instabilities and managing the physical sequestration of artifacts discovered outside their native era vectors. The system is predicated on the **Law of Temporal Continuity**, treating history as a series of rigid **Era Vectors**.
 
-### 1. Initialize npm
-`npm init -y`
+When objects are displaced across time, they create **Temporal Anomalies** that threaten the stability of the Prime Timeline. This application operationalizes a professional **Capture-and-Contain cycle**: anomalies are detected via spatial-temporal coordinates, field agents are deployed to stabilize the rip, and recovered items are manually ingested into a high-security grid.
 
-### 2. Install dependencies
-`npm install express sequelize pg pg-hstore`
+The system features **Vertical Filtering** (Clearance levels 1-5) and **Horizontal RBAC** (Scope-based permissions), ensuring that only authorized personnel can access high-threat items or perform timeline-altering operations.
 
-### 3. Install development tools (Sequelize CLI)
-`npm install --save-dev sequelize-cli`
+---
 
-### 4. Initialize Sequelize structure
-`npx sequelize-cli init`
+## 🌌 1. System Concept and Forensic Logic
 
+The core philosophy of Project Chronos is centered on the prevention of causal paradoxes. The application functions as a digital "Evidence Locker" for history itself.
 
-## Step 2: Configure the Database
+### The Capture-and-Contain Loop
+* **Detection (The Rip):** Temporal disturbances identified by location and signature. A signature includes the danger level (1-5) and the probability of timeline collapse.
+* **Stabilization (The Mission):** Field agents assigned to anomalies. The mission state machine handles deployment, investigation, and finalization.
+* **Manual Ingestion (Registry):** Because temporal objects are highly volatile, ingestion is not automated. A human operator must manually finalize a mission by entering the artifact's details, serial number, and assigned vault.
+* **Containment (The Grid):** Items assigned to specialized Vaults (e.g., Lead-Lined Quantum Shielding) based on danger level. Low-clearance agents are strictly prohibited from viewing the contents of high-security vaults.
 
-Open the file config/config.json and add "postgres" in developement section.
+---
 
+## 📂 2. Technical Architecture Details
 
-## Step 3: Create the  Models & Migration
+The project follows a modular **Service-Oriented Architecture (SOA)** to decouple business logic from API routing and security enforcement.
 
-### 1. Update the package list
-`sudo apt-get update`
+### Directory Structure
+* **controllers/**: Handles the request-response lifecycle (e.g., `auth.js`, `mission.js`, `artifact.js`).
+* **middlewares/**: Security enforcement layers (e.g., `auth.js`, `perm.js`, `biometric.js`).
+* **models/**: PostgreSQL database schemas using Sequelize ORM (14 distinct models including `User`, `Artifact`, `Session`, `AuditLog`).
+* **routes/**: Centralized endpoint definitions for the Agency API.
+* **services/**: The scientific logic layer (e.g., `missionService.js`, `paradoxService.js`).
+* **migrations/**: Historical database schema evolution scripts.
+* **seeders/**: Mandatory initialization scripts for Agency protocols.
 
-### 2. Install PostgreSQL
-`sudo apt-get install -y postgresql postgresql-contrib`
+### Core Controllers and Services
+* **auth.js**: Manages identity verification and stateful session persistence.
+* **missionService.js**: Orchestrates transition logic; closing anomalies while generating Artifact records upon mission finalization.
+* **artifactService.js**: Implements Dual-Vector Searching, allowing indexing by item name or origin era.
+* **containmentService.js**: Evaluates vault stability, load capacity, and threat-level compatibility.
+* **paradoxService.js**: Calculates real-time collapse probability based on active disturbances.
 
-### 3. Start the service
-`sudo service postgresql start`
+### Security Middlewares
+* **CheckAuth**: Validates JWT integrity and performs a Stateful Session Check against the database.
+* **CheckPermission**: The RBAC gatekeeper verifying both the user's Scope and Clearance Level.
+* **BiometricCheck**: A high-security override simulation requiring a simulated retina hash in the request header.
 
-### 4. Start Postgres using Docker 
-`docker run --name my-postgres -e POSTGRES_PASSWORD=azerty -e POSTGRES_DB=SarazinNode_dev -p 5432:5432 -d postgres 2ca0072c0a1224de3e7446c620abb7b9dc0ebe5ec842bdd75f09e4c47112801f`
+---
 
+## ⚛️ 3. Frontend Implementation (React & Axios)
 
-### 5. Models Generation
-- User Model: `npx sequelize-cli model:generate --name User --attributes "firstname:string,lastname:string,email:string"`
+The frontend is a specialized **"HUD" (Heads-Up Display)** for Agency Personnel.
 
-- Device Model: `npx sequelize-cli model:generate --name Device --attributes "name:string,serialNumber:string,userId:integer"`
+### Interface HUD Elements
+* **Dashboard.js**: Real-time overview of agency metrics, including the Timeline Stability Index and active threat counts.
+* **Missions.js**: Command center for logging rips and report-to-recovery workflows.
+* **Archive.js**: Searchable registry of all secured artifacts with encrypted data decryption simulations.
+* **Vaults.js**: Visual representation of the Containment Grid, managing unit integrity and load capacity.
+* **AdminPanel.js**: Restricted interface for personnel enlistment and immutable audit log review.
 
-- Group Model: `npx sequelize-cli model:generate --name Group --attributes "name:string"`
+### Hostname Resolver and Port Management
+Designed specifically for GitHub Codespaces and cloud development environments where standard localhost routing is restricted.
 
-- UserGroups (manyTomany) : `npx sequelize-cli model:generate --name UserGroup --attributes "userId:integer,groupId:integer"`
-- Session
+* **package.json Proxy**: The `proxy` field in `insa-react/package.json` is set to a development URL. This can be manually updated by the tester to match their specific environment if required for static routing.
+* **Dynamic Hostname Resolver (api.js)**: To ensure cross-environment compatibility, the system includes a Hostname Resolver in `src/api.js`. It automatically detects the active browser URL and swaps the frontend port (3001) for the backend port (3000). This bridges requests regardless of the unique GitHub workspace URL provided to the auditor.
 
-### 6. Run the Migration
-`npx sequelize-cli db:migrate`
+---
 
+## 🚀 4. Deployment & Initialization Protocol
 
-### 7. Test
 
-- Connect to the Database : 
-`docker exec -it my-postgres psql -U postgres -d SarazinNode_dev`
- & then test with "SELECT * FROM "Users";"
+### 0. Environment Configuration (.env)
+Before initialization, ensure a `.env` file exists in the root directory with the following mandatory parameters for the auditor:
 
+```text
+PORT=3000
+JWT_SECRET=secret
+DB_NAME=db_name
+DB_USER=user
+DB_PASS=password
+DB_HOST=127.0.0.1
+```
 
-## Step 4: Define Associations (The "Links")
+### 1. Persistent Database Layer (Docker)
+Launch the sequestered PostgreSQL instance. Use environment variables to keep actual credentials secure.
 
-- inside  models/user.js  --static associate(models)-- : define associations between user-> grp & user-> device
-- inside  models/device.js : define the mapping with user
+```bash
+docker run -d \
+  --name agency-db \
+  -e POSTGRES_PASSWORD=${DATABASE_PASSWORD} \
+  -e POSTGRES_DB=${DATABASE_NAME} \
+  -v chronos_data:/var/lib/postgresql/data \
+  -p 5432:5432 \
+  postgres:latest
+```
 
+### 2. Dependency & Schema Initialization
 
-## Step 5: Create the Architecture 
-To add the missing directories as the professor said `mkdir controllers routes middlewares services utils`
+```bash
+# Synchronize all project dependencies
+npm install
 
-## Step 6: Create the Logic (Controller)
-File user.js inside controller is created with CRUD functions
+# Deploy 14 layers of database schema migrations
+npx sequelize-cli db:migrate
+```
 
-## Step 7: Create the Routes
-File users.js is created inside routes 
+### 3. Establishing Administrative Access (O5-Council)
+Initial Administrative (O5-Council) credentials and the RBAC hierarchy must be established via the Seeding protocol. This account is required to register new agents via the UI Admin Panel.
 
-## Step 8: Start the Server & TEST
-- start server : `node server.js`
-- restart DB : `docker start my-postgres`
-- Test "CREATE USER" (POST) : `curl -X POST http://localhost:3000/users \ -H "Content-Type: application/json" \ -d '{"firstname": "Hajar", "lastname": "Aloua", "email": "alouahajar20@gmail.com"}'`
+```bash
+# Inject RBAC Scopes, Departments, and the Master Admin account
+npx sequelize-cli db:seed:all
+```
 
-- Test "GET ALL USERS" (GET) : `curl http://localhost:3000/users`
-- Test "UPDATE USER" (PUT) : `curl -X PUT http://localhost:3000/users/1 \ -H "Content-Type: application/json" \ -d '{"firstname": "Hajar Updated"}'`
-- Test "DELETE USER" (DELETE) : `curl -X DELETE http://localhost:3000/users/1`
+### 4. Operational Protocols & Testing
 
-- Test "Groups" : (CREATE)-> `curl -X POST http://localhost:3000/groups \ -H "Content-Type: application/json" \ -d '{"name": "Admin Team"}'` & (GET List ALL) -> `curl http://localhost:3000/groups` 
+#### 1. Launching Services
 
-- Test "Devices" (CREATE) -> `curl -X POST http://localhost:3000/devices \ -H "Content-Type: application/json" \ -d '{"name": "iPhone 15", "serialNumber": "SN-998877", "userId": 1}'`  & (GET List ALL) -> `curl http://localhost:3000/devices` 
+* **Backend API** : ```node server.js``` (Default Port 3000)
+* **Frontend UI** : ```cd insa-react && npm start``` (Default Port 3001)
 
-- LINK USER to GRP : `curl -X POST http://localhost:3000/users/1/groups/1`
+#### 2. Accessing the Database CLI
+To manually inspect the Registry or Personnel tables:
 
+```bash docker exec -it agency-db psql -U postgres -d ${DATABASE_NAME} ```
 
+#### 3. Security Boundary Tests (Auditor Reference)
 
-## Step 9: Adding Session Model & Test
- in this step 
+| Test Objective         | Request Method           | Expected Security Result                             |
+| :--------------------- | :----------------------- | :--------------------------------------------------- |
+| **BOLA Protection**    | `GET /api/artifacts/:id` | 403 Forbidden if artifact level > agent clearance    |
+| **BFLA Protection**    | `DELETE /api/users/:id`  | 403 Access Denied for non-Admin accounts             |
+| **Session Revocation** | `POST /api/logout`       | Token invalidated immediately via DB purge           |
+| **Port Swapping**      | Load Port 3001           | `api.js` automatically bridges requests to Port 3000 |
 
-- Database Layer: created a Sessions table linked to Users
-- Auth Controller:  built a login function that generates a secure token and saves it to the DB.
-- Middleware: built CheckAuth, which intercepts requests, verifies the token against the database, and attaches the user to the request.
-- Route Protection: protected/users endpoints.
 
-- To generate model session : `npx sequelize-cli migration:generate --name create-session`
+### 5. Current Development Status
 
------------------TESTS-------------------------------- 
+Project Chronos is undergoing continuous expansion. While the core Capture-and-Contain loop is operational, the architecture is designed to accommodate additional modular services. I am aware that further services could be integrated to enhance system utility.
 
-- to check tables exist : `docker exec -it my-postgres psql -U postgres -d SarazinNode_dev -c "\dt"`
 
-- Toregister no token needed `curl -X POST http://localhost:3000/register \ -H "Content-Type: application/json" \ -d '{"firstname": "Zoral", "lastname": "Dev", "email": "zoral@test.com"}'`
 
-- To login to genrate token `curl -X POST http://localhost:3000/login \-H "Content-Type: application/json" \ -d '{"email": "zoral@test.com"}'`
 
-- To acces users   `curl -X GET http://localhost:3000/users \ -H "Authorization: Bearer <THE_TOKEN>`
+ 
 
 
 
-## Step 10: JWT
-
-- install the JWT Library : `npm install jsonwebtoken`
-- for env file : `npm install dotenv`
-- Create services/jwt.js  : This service will handle the signing and verification of the tokens.
-- Update middlwears/auth.js : Now, the middleware doesn't need to talk to the database Session table to verify a token ( but still save tk to session to verify wich active session)
-- Update controllers/auth.js :  to use new jwt service
-
-----------------------------------TESTS-------------------------------------------------------
-
-- Login to get the JWT : `curl -X POST http://localhost:3000/login \ -H "Content-Type: application/json" \ -d '{"email": "zoral@test.com"}'` 
-
-- Use the Token to Access Users : `curl -X GET http://localhost:3000/users \-H "Authorization: Bearer JWT_HERE"`
-
-
-## Step 11: Permission Model
-
-- First, we create the Permission model and the join table for Groups : ` npx sequelize-cli model:generate --name Permission --attributes scope:string` + `npx sequelize-cli model:generate --name GroupPermission --attributes groupId:integer,permissionId:integer` (ManytoMany)
-
-- models/permission.js : fill the associations
-
-- models/group.js : add association with permission
-
-- services/permission.js : Since permissions are now stored in the database, we need a service to fetch all unique scopes a user has across all their group , looks at their groups, and collects all the unique scopes.
-
-- middlewares/perm.js : This middleware will check if the user's JWT contains the required scope for that route.
-
-- routes/users.js : Applying RBAC to Routes to controle endpoints
-
-
-- Permission Mapping Table : 
-
-Group,Scopes (Permissions)
-* Admin,* (All permissions listed below)
-* UserManager,"user:read, user:write, user:delete, group:read"
-* DeviceManager,"device:read, device:write, device:delete"
-* UserStandard,"self:read, me:write, device:read, session:read"
-* Guest,"self:read, device:read"
-
-
-- Generate the Seeder File : ` npx sequelize-cli seed:generate --name rbac-setup`
-- Add the RBAC Logic : mapping the groups to the specific permissions you to the previus file generated
-- Run the Seeder : `npx sequelize-cli db:seed:all`
-- Verify in Database : `docker exec -it my-postgres psql -U postgres -d SarazinNode_dev -c "SELECT \"Groups\".name, \"Permissions\".scope FROM \"Groups\" JOIN \"GroupPermissions\" ON \"Groups\".id = \"GroupPermissions\".\"groupId\" JOIN \"Permissions\" ON \"Permissions\".id = \"GroupPermissions\".\"permissionId\" WHERE \"Groups\".name = 'Guest';"`
-
-
-
------------------------------------------TEST ---------------------------------------------------
-
-- Register user : `curl -X POST http://localhost:3000/register -H "Content-Type: application/json" \-d '{"firstname": "Sarah", "lastname": "Worker", "email": "sarah@company.com"}'` & `curl -X POST http://localhost:3000/register -H "Content-Type: application/json" \-d '{"firstname": "Tom", "lastname": "Guest", "email": "tom@external.com"}'`
-
-
-- Assign Groups in the Database : ``
 

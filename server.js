@@ -37,6 +37,15 @@ app.use((req, res, next) => {
     next();
 });
 
+app.get('/', (req, res) => {
+    res.json({
+        system: "CHRONOS_TEMPORAL_ARCHIVE",
+        status: "ONLINE",
+        database: "CONNECTED",
+        clearance_required: "LEVEL_1",
+        timestamp: new Date().toISOString()
+    });
+});
 // API Routes
 app.use('/api', mainRouter);
 

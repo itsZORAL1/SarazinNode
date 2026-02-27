@@ -138,6 +138,10 @@ To manually inspect the Registry or Personnel tables:
 | **Session Revocation** | `POST /api/logout`       | Token invalidated immediately via DB purge           |
 | **Port Swapping**      | Load Port 3001           | `api.js` automatically bridges requests to Port 3000 |
 
+
+Also the ADMIN_PANEL link in the sidebar will disappear, as the frontend logic checks clearance === 5.
+and if  attempt to report a new anomaly as level 1, the backend will return a 403 Forbidden because the routes/missions.js requires Level 4 clearance for reporting.
+
 ### 5. Cloud-Native Deployment (Docker & Render)
 The system is containerized for high-availability deployment. The image is hosted on Docker Hub and managed via Render for the compute layer and Supabase for the persistence layer.
 

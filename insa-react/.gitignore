@@ -4,12 +4,20 @@
 /node_modules
 /.pnp
 .pnp.js
+insa-react/node_modules/
+jspm_packages/
 
 # testing
 /coverage
 
 # production
 /build
+insa-react/build/
+insa-react/dist/
+.cache/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
 # misc
 .DS_Store
@@ -17,7 +25,25 @@
 .env.development.local
 .env.test.local
 .env.production.local
+.env.production
+insa-react/.env
 
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+.env
+
+
+.dockerignore
+
+
+
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
